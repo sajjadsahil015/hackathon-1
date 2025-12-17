@@ -1,0 +1,8 @@
+{
+  "label": "Module 2: The Digital Twin",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Understand digital twins and simulation for humanoid robots. Covers physics simulation with Gazebo, high-fidelity rendering with Unity, and sensor simulation (LiDAR, depth cameras, IMUs)."
+  }
+}

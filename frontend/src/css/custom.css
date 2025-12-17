@@ -1,0 +1,155 @@
+/**
+ * Custom styles for Physical AI & Humanoid Robotics book
+ */
+
+/* Color palette */
+:root {
+  --ifm-color-primary: #2563eb;
+  --ifm-color-primary-dark: #1d4ed8;
+  --ifm-color-primary-darker: #1e40af;
+  --ifm-color-primary-darkest: #1e3a8a;
+  --ifm-color-primary-light: #3b82f6;
+  --ifm-color-primary-lighter: #60a5fa;
+  --ifm-color-primary-lightest: #93c5fd;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode colors */
+[data-theme='dark'] {
+  --ifm-color-primary: #60a5fa;
+  --ifm-color-primary-dark: #3b82f6;
+  --ifm-color-primary-darker: #2563eb;
+  --ifm-color-primary-darkest: #1d4ed8;
+  --ifm-color-primary-light: #93c5fd;
+  --ifm-color-primary-lighter: #bfdbfe;
+  --ifm-color-primary-lightest: #dbeafe;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Module category styling */
+.menu__link--sublist-caret[href*="module-1"] {
+  color: #2563eb;
+}
+
+.menu__link--sublist-caret[href*="module-2"] {
+  color: #16a34a;
+}
+
+.menu__link--sublist-caret[href*="module-3"] {
+  color: #9333ea;
+}
+
+.menu__link--sublist-caret[href*="module-4"] {
+  color: #ea580c;
+}
+
+/* Custom tip/success blocks */
+.admonition-tip {
+  border-left-color: #16a34a;
+}
+
+.admonition-tip .admonition-heading {
+  color: #16a34a;
+}
+
+/* Table styling */
+table {
+  display: table;
+  width: 100%;
+}
+
+table th {
+  background-color: var(--ifm-color-primary-lightest);
+}
+
+[data-theme='dark'] table th {
+  background-color: var(--ifm-color-primary-darkest);
+}
+
+/* Mermaid diagram container */
+.mermaid {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+/* Code block styling */
+pre code {
+  font-size: 0.9rem;
+}
+
+/* Reading time badge */
+.badge--secondary {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+[data-theme='dark'] .badge--secondary {
+  background-color: #374151;
+  color: #e5e7eb;
+}
+
+/* Chapter header styling */
+h1 {
+  border-bottom: 2px solid var(--ifm-color-primary);
+  padding-bottom: 0.5rem;
+}
+
+/* Success check styling */
+.success-check {
+  background-color: #dcfce7;
+  border-left: 4px solid #16a34a;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+[data-theme='dark'] .success-check {
+  background-color: #14532d;
+}
+
+/* Learning objectives list */
+.learning-objectives {
+  background-color: #f0f9ff;
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+}
+
+[data-theme='dark'] .learning-objectives {
+  background-color: #0c4a6e;
+}
+
+/* Module intro cards */
+.module-card {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  transition: box-shadow 0.2s;
+}
+
+.module-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Glossary table */
+.glossary-table th:first-child {
+  width: 25%;
+}
+
+/* Footer link styling */
+.footer__link-item {
+  font-size: 0.9rem;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  table {
+    font-size: 0.85rem;
+  }
+
+  .mermaid {
+    overflow-x: auto;
+  }
+}

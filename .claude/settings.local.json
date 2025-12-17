@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(bash:*)",
+      "mcp__context7__resolve-library-id",
+      "Bash(npm install:*)",
+      "mcp__context7__get-library-docs",
+      "Bash(npm run build:*)",
+      "mcp__github__create_repository"
+    ]
+  }
+}

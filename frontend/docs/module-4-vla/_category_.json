@@ -1,0 +1,8 @@
+{
+  "label": "Module 4: Vision-Language-Action",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Explore Vision-Language-Action systems for autonomous humanoid robots. Covers VLA architecture, voice-to-action pipelines with LLMs, and the capstone that integrates all modules into a complete autonomous system."
+  }
+}
