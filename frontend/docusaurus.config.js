@@ -8,14 +8,14 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-github-username.github.io',
+  url: 'https://sajjadsahil015.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
-  // For local development use '/', for GitHub Pages use '/physical-ai-book/'
+  // For local development use '/', for GitHub Pages use '/hackathon-1/'
   baseUrl: '/',
 
   // GitHub pages deployment config
-  organizationName: 'your-github-username',
-  projectName: 'physical-ai-book',
+  organizationName: 'sajjadsahil015',
+  projectName: 'hackathon-1',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -40,7 +40,7 @@ const config = {
           sidebarPath: './sidebars.js',
           routeBasePath: '/',
           // Edit this page links
-          editUrl: 'https://github.com/your-github-username/physical-ai-book/tree/main/',
+          editUrl: 'https://github.com/sajjadsahil015/hackathon-1/tree/main/frontend/',
         },
         blog: false,
         theme: {
@@ -75,7 +75,7 @@ const config = {
             position: 'left',
           },
           {
-            href: 'https://github.com/your-github-username/physical-ai-book',
+            href: 'https://github.com/sajjadsahil015/hackathon-1',
             label: 'GitHub',
             position: 'right',
           },
