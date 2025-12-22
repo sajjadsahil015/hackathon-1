@@ -238,16 +238,26 @@ async def ingest_book(input_path: Path, metadata_path: Path | None = None) -> No
 
     # Generate embeddings and upload
     print("Generating embeddings and uploading to Qdrant...")
-    batch_size = 20  # Smaller batches for cloud reliability
+    batch_size = 10  # Smaller batches for rate limiting
     total_uploaded = 0
+    import time
 
     for i in range(0, len(chunks), batch_size):
         batch = chunks[i : i + batch_size]
         points = []
 
         for chunk in batch:
-            # Generate embedding
-            embedding = await embedding_service.embed_text(chunk.text)
+            # Generate embedding with retry on rate limit
+            for retry in range(3):
+                try:
+                    embedding = await embedding_service.embed_text(chunk.text)
+                    break
+                except Exception as e:
+                    if "429" in str(e) or "rate" in str(e).lower():
+                        print(f"  Rate limited, waiting 60s...")
+                        time.sleep(60)
+                    else:
+                        raise
 
             # Create point
             point = PointStruct(
