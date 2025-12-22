@@ -23,13 +23,19 @@ class CitationService:
         """
         citations = []
         for chunk in chunks:
+            # Ensure chapter_number is at least 1 (handles legacy data with 0)
+            chapter_num = max(1, chunk.chapter_number)
+            chapter_title = chunk.chapter_title or "Book Introduction"
+            page_start = max(1, chunk.page_start)
+            page_end = max(1, chunk.page_end)
+
             citation = Citation(
-                chapter_number=chunk.chapter_number,
-                chapter_title=chunk.chapter_title,
+                chapter_number=chapter_num,
+                chapter_title=chapter_title,
                 section_number=chunk.section_number if chunk.section_number else None,
                 section_title=chunk.section_title if chunk.section_title else None,
-                page_start=chunk.page_start,
-                page_end=chunk.page_end,
+                page_start=page_start,
+                page_end=page_end,
                 relevance_score=round(chunk.score, 3),
             )
             citations.append(citation)

@@ -57,11 +57,15 @@ CHAPTER_TITLES = {
 
 
 def get_chapter_number(filename: str) -> int:
-    """Extract chapter number from filename."""
+    """Extract chapter number from filename.
+
+    Returns 1 for files without a numeric prefix (like intro.md).
+    """
     match = re.match(r"(\d+)-", filename)
     if match:
         return int(match.group(1))
-    return 0
+    # Default to 1 for non-numbered files (intro, glossary, etc.)
+    return 1
 
 
 def chunk_text(text: str, chunk_size: int = 1500, overlap: int = 200) -> list[str]:
@@ -135,7 +139,7 @@ async def ingest_docs(docs_path: Path) -> None:
     for md_file in md_files:
         # Determine module info
         parent_dir = md_file.parent.name
-        module_info = MODULE_INFO.get(parent_dir, {"number": 0, "title": "General"})
+        module_info = MODULE_INFO.get(parent_dir, {"number": 1, "title": "Book Introduction"})
 
         # Get chapter info
         chapter_num = get_chapter_number(md_file.name)
