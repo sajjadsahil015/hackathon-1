@@ -8,7 +8,7 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://sajjadsahil015.github.io',
+  url: 'https://hackathon-1-xi-lyart.vercel.app',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For local development use '/', for GitHub Pages use '/hackathon-1/'
   baseUrl: '/',
