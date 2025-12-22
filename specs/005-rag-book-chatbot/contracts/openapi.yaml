@@ -1,0 +1,239 @@
+openapi: 3.1.0
+info:
+  title: RAG Chatbot for Technical Book
+  description: |
+    API for answering questions grounded strictly in the Physical AI & Humanoid Robotics book content.
+    Supports two query modes: full-book context search and user-selected-text-only answering.
+  version: 1.0.0
+  contact:
+    name: API Support
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+  - url: https://api.example.com
+    description: Production server
+
+paths:
+  /query:
+    post:
+      operationId: submitQuery
+      summary: Submit a question to the RAG chatbot
+      description: |
+        Accepts a natural language question and returns an answer grounded in book content.
+        Two modes available:
+        - `full_book`: Searches entire book for relevant passages
+        - `selected_text`: Uses only the provided text as context
+      tags:
+        - Query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+            examples:
+              fullBookQuery:
+                summary: Full book context query
+                value:
+                  question: "What is sensor fusion in humanoid robots?"
+                  mode: "full_book"
+              selectedTextQuery:
+                summary: Selected text context query
+                value:
+                  question: "What does this mean?"
+                  mode: "selected_text"
+                  selected_text: "Sensor fusion combines data from multiple sensors to produce more accurate estimates than any single sensor could provide alone."
+      responses:
+        '200':
+          description: Successful response with answer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+              examples:
+                foundAnswer:
+                  summary: Answer found in book
+                  value:
+                    answer: "Sensor fusion in humanoid robots refers to the process of combining data from multiple sensors (such as IMUs, cameras, and force sensors) to produce more accurate and reliable estimates of the robot's state and environment."
+                    citations:
+                      - chapter_number: 5
+                        chapter_title: "Perception and Sensing"
+                        section_number: 3
+                        section_title: "Multi-Sensor Integration"
+                        page_start: 142
+                        page_end: 145
+                        relevance_score: 0.89
+                    mode: "full_book"
+                    found_in_book: true
+                    confidence: 0.89
+                    query_id: "550e8400-e29b-41d4-a716-446655440000"
+                    processing_time_ms: 2340
+                notFound:
+                  summary: Topic not found in book
+                  value:
+                    answer: "I could not find information about this topic in the book. Please try rephrasing or ask about a topic covered in the book."
+                    citations: []
+                    mode: "full_book"
+                    found_in_book: false
+                    confidence: 0.0
+                    query_id: "550e8400-e29b-41d4-a716-446655440001"
+                    processing_time_ms: 1200
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalidQuestion:
+                  summary: Question too short
+                  value:
+                    error: "validation_error"
+                    message: "Question must be at least 3 characters"
+                    details:
+                      field: "question"
+                missingSelectedText:
+                  summary: Selected text mode without text
+                  value:
+                    error: "validation_error"
+                    message: "Selected text must be at least 10 characters"
+                    details:
+                      field: "selected_text"
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "rate_limit_exceeded"
+                message: "Too many requests. Please wait before trying again."
+                details:
+                  retry_after_seconds: 60
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /health:
+    get:
+      operationId: healthCheck
+      summary: Check API health status
+      tags:
+        - Health
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+  /stats:
+    get:
+      operationId: getStats
+      summary: Get service statistics
+      tags:
+        - Admin
+      responses:
+        '200':
+          description: Service statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatsResponse'
+
+components:
+  schemas:
+    QueryMode:
+      type: string
+      enum:
+        - full_book
+        - selected_text
+      description: |
+        Query mode:
+        - `full_book`: Search entire book for relevant passages
+        - `selected_text`: Use only the provided text as context
+
+    QueryRequest:
+      type: object
+      required:
+        - question
+      properties:
+        question:
+          type: string
+          minLength: 3
+          maxLength: 1000
+          description: The question to ask about the book content
+          example: "What is sensor fusion in humanoid robots?"
+        mode:
+          $ref: '#/components/schemas/QueryMode'
+          default: full_book
+        selected_text:
+          type: string
+          minLength: 10
+          maxLength: 5000
+          description: Text passage for selected_text mode (required when mode is selected_text)
+          example: "Sensor fusion combines data from multiple sensors..."
+
+    Citation:
+      type: object
+      required:
+        - chapter_number
+        - chapter_title
+        - page_start
+        - page_end
+        - relevance_score
+      properties:
+        chapter_number:
+          type: integer
+          minimum: 1
+          description: Chapter number (1-based)
+        chapter_title:
+          type: string
+          description: Title of the chapter
+        section_number:
+          type: integer
+          minimum: 1
+          nullable: true
+          description: Section number within chapter (1-based)
+        section_title:
+          type: string
+          nullable: true
+          description: Title of the section
+        page_start:
+          type: integer
+          minimum: 1
+          description: Starting page number
+        page_end:
+          type: integer
+          minimum: 1
+          description: Ending page number
+        relevance_score:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+          description: Relevance score (0.0 to 1.0)
+
+    QueryResponse:
+      type: object
+      required:
+        - answer
+        - citations
+        - mode
+        - found_in_book
+        - confidence
+        - query_id
+        - processing_time_ms
+      properties:
+        answer:
+          type: string
+          description: The generated answer text
+        citations:
+          type: array
+          items:
+            $ref: 
