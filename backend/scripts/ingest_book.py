@@ -19,14 +19,14 @@ from typing import Iterator
 # Load .env file before any other imports to override system env vars
 from dotenv import dotenv_values
 
-_env_path = Path(__file__).parent.parent / ".env"
+_env_path = Path(__file__).parent.parent.parent / ".env"
 _env_config = dotenv_values(_env_path)
 for key, value in _env_config.items():
     if value:
         os.environ[key] = value
 
-# Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+# Add backend to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct
