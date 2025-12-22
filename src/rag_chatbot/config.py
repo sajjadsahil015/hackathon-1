@@ -18,8 +18,8 @@ class Settings(BaseSettings):
     # Cohere Configuration (for embeddings)
     cohere_api_key: str = ""
 
-    # Google Gemini API (for generation only)
-    google_api_key: str = ""
+    # Qwen via Hugging Face (for generation)
+    qwen_api_key: str = ""
 
     # Qdrant Vector Store
     qdrant_url: str = "http://localhost:6333"
@@ -42,8 +42,8 @@ class Settings(BaseSettings):
     embedding_model: str = "embed-english-v3.0"
     embedding_dimension: int = 1024
 
-    # Generation Configuration (Gemini)
-    generation_model: str = "gemini-2.0-flash"
+    # Generation Configuration (Qwen via HuggingFace)
+    generation_model: str = "Qwen/Qwen2.5-72B-Instruct"
     max_response_tokens: int = 1024
 
     # Logging
