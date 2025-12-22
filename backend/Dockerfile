@@ -7,6 +7,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY rag_chatbot/ ./rag_chatbot/
 
-EXPOSE 7860
+EXPOSE 10000
 
-CMD ["uvicorn", "rag_chatbot.main:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["sh", "-c", "uvicorn rag_chatbot.main:app --host 0.0.0.0 --port ${PORT:-10000}"]
