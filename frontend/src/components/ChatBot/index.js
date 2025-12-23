@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './styles.module.css';
 
-const API_URL = 'https://hackathon-1-opxs.onrender.com';
+const API_URL = 'https://hackathon-1-1-0xc0.onrender.com';
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
