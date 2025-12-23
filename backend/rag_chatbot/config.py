@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     database_url: str = "postgresql://ragchatbot:ragchatbot_dev@localhost:5432/ragchatbot"
 
     # RAG Configuration
-    relevance_threshold: float = 0.35  # Adjusted for Cohere embeddings
+    relevance_threshold: float = 0.25  # Lowered to catch more relevant content
     max_results: int = 5
     chunk_size: int = 512
     chunk_overlap: int = 50

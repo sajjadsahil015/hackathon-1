@@ -107,6 +107,7 @@ The project operates within the following technical boundaries:
 - Backend: FastAPI (Python)
 - Vector store: Qdrant
 - Relational store: Neon Postgres
+- Embedding model: Gemini (free tier)
 - Chatbot scope: Full-book Q&A and user-selected-text contextual questions only
 
 **Explicit Non-Goals:**

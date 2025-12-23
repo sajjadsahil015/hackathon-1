@@ -1,8 +1,19 @@
 #!/usr/bin/env python3
 """Setup Qdrant vector store with book_chunks collection."""
 
+import os
 import sys
 from pathlib import Path
+
+# Load .env file before any other imports
+from dotenv import dotenv_values
+
+_env_path = Path(__file__).parent.parent.parent / ".env"
+if _env_path.exists():
+    _env_config = dotenv_values(_env_path)
+    for key, value in _env_config.items():
+        if value:
+            os.environ[key] = value
 
 # Add backend to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))

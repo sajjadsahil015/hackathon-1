@@ -208,3 +208,10 @@ Wait for consent; never auto-create ADRs. Group related decisions (stacks, authe
 
 ## Code Standards
 See `.specify/memory/constitution.md` for code quality, testing, performance, security, and architecture principles.
+
+## Active Technologies
+- Python 3.11+ + FastAPI, google-generativeai, qdrant-client, pydantic (005-rag-book-chatbot)
+- Qdrant (vector store), Neon Postgres (metadata/citations) (005-rag-book-chatbot)
+
+## Recent Changes
+- 005-rag-book-chatbot: Added Python 3.11+ + FastAPI, google-generativeai, qdrant-client, pydantic

@@ -1,5 +1,4 @@
 ---
-slug: /
 sidebar_position: 1
 ---
 
@@ -135,4 +134,4 @@ The final chapter synthesizes all four modules:
 
 ## Getting Started
 
-Ready to begin? Start with [Module 1, Chapter 1: ROS 2 Architecture](/module-1-ros2/ros2-architecture).
+Ready to begin? Start with [Module 1, Chapter 1: ROS 2 Architecture](./module-1-ros2/ros2-architecture).

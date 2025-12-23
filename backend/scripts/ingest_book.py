@@ -238,16 +238,33 @@ async def ingest_book(input_path: Path, metadata_path: Path | None = None) -> No
 
     # Generate embeddings and upload
     print("Generating embeddings and uploading to Qdrant...")
-    batch_size = 20  # Smaller batches for cloud reliability
+    batch_size = 10  # Smaller batches for rate limiting
     total_uploaded = 0
+    import time
 
     for i in range(0, len(chunks), batch_size):
         batch = chunks[i : i + batch_size]
         points = []
 
         for chunk in batch:
-            # Generate embedding
-            embedding = await embedding_service.embed_text(chunk.text)
+            # Generate embedding with retry on rate limit
+            embedding = None
+            for retry in range(5):
+                try:
+                    embedding = await embedding_service.embed_text(chunk.text)
+                    break
+                except Exception as e:
+                    error_str = str(e)
+                    if "429" in error_str or "rate" in error_str.lower() or "TooMany" in error_str:
+                        wait_time = 65  # Wait just over 1 minute
+                        print(f"  Rate limited, waiting {wait_time}s (retry {retry+1}/5)...")
+                        time.sleep(wait_time)
+                    else:
+                        raise
+
+            if embedding is None:
+                print(f"  Failed to get embedding after retries, skipping chunk")
+                continue
 
             # Create point
             point = PointStruct(
@@ -268,12 +285,19 @@ async def ingest_book(input_path: Path, metadata_path: Path | None = None) -> No
             points.append(point)
 
         # Upload batch
-        qdrant_client.upsert(
-            collection_name=settings.qdrant_collection_name,
-            points=points,
-        )
-        total_uploaded += len(points)
-        print(f"  Uploaded {total_uploaded}/{len(chunks)} chunks")
+        if points:
+            qdrant_client.upsert(
+                collection_name=settings.qdrant_collection_name,
+                points=points,
+            )
+            total_uploaded += len(points)
+            print(f"  Uploaded {total_uploaded}/{len(chunks)} chunks")
+
+        # Rate limit: wait between batches (40 calls/min = ~1.5s per call)
+        # For batch of 10, wait 20s to stay safe
+        if i + batch_size < len(chunks):
+            print(f"  Waiting 20s to avoid rate limit...")
+            time.sleep(20)
 
     print(f"\nSuccessfully ingested {total_uploaded} chunks into Qdrant")
 

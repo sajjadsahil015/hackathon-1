@@ -8,7 +8,7 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://sajjadsahil015.github.io',
+  url: 'https://hackathon-1-xi-lyart.vercel.app',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For local development use '/', for GitHub Pages use '/hackathon-1/'
   baseUrl: '/',
@@ -38,7 +38,7 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
-          routeBasePath: '/',
+          routeBasePath: '/docs',
           // Edit this page links
           editUrl: 'https://github.com/sajjadsahil015/hackathon-1/tree/main/frontend/',
         },
@@ -64,13 +64,18 @@ const config = {
         },
         items: [
           {
+            to: '/',
+            label: 'Home',
+            position: 'left',
+          },
+          {
             type: 'docSidebar',
             sidebarId: 'bookSidebar',
             position: 'left',
             label: 'Book',
           },
           {
-            href: '/glossary',
+            href: '/docs/glossary',
             label: 'Glossary',
             position: 'left',
           },
@@ -90,11 +95,11 @@ const config = {
             items: [
               {
                 label: 'Introduction',
-                to: '/',
+                to: '/docs/intro',
               },
               {
                 label: 'Glossary',
-                to: '/glossary',
+                to: '/docs/glossary',
               },
             ],
           },
@@ -103,19 +108,19 @@ const config = {
             items: [
               {
                 label: 'Module 1: ROS 2',
-                to: '/module-1-ros2/ros2-architecture',
+                to: '/docs/module-1-ros2/ros2-architecture',
               },
               {
                 label: 'Module 2: Simulation',
-                to: '/module-2-simulation/digital-twins-gazebo',
+                to: '/docs/module-2-simulation/digital-twins-gazebo',
               },
               {
                 label: 'Module 3: Isaac',
-                to: '/module-3-isaac/perception-isaac-sim',
+                to: '/docs/module-3-isaac/perception-isaac-sim',
               },
               {
                 label: 'Module 4: VLA',
-                to: '/module-4-vla/vla-architecture',
+                to: '/docs/module-4-vla/vla-architecture',
               },
             ],
           },
